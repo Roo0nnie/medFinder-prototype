@@ -19,19 +19,19 @@ A role-based web-based **Centralized Medical Product Finder** (medicine & medica
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Run development server (http://localhost:3000)
-npm run dev
+pnpm run dev
 
 # Build for production
-npm run build
+pnpm run build
 
 # Start production server
-npm start
+pnpm start
 
 # Run lint
-npm run lint
+pnpm run lint
 ```
 
 ---
