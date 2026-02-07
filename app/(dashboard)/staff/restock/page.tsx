@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/context/ProductsContext";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -10,12 +10,13 @@ import { Badge } from "@/components/ui/Badge";
 export default function StaffRestockPage() {
   const { user } = useAuth();
   const { products } = useProducts();
+  const { stores } = useStores();
 
   const myStoreIds = user?.storeId ? [user.storeId] : [];
   const lowStockProducts = products
     .filter((p) => myStoreIds.includes(p.storeId) && p.quantity <= p.lowStockThreshold)
     .sort((a, b) => a.quantity - b.quantity);
-  const getStoreName = (storeId: string) => initialStores.find((s) => s.id === storeId)?.name ?? "Unknown";
+  const getStoreName = (storeId: string) => stores.find((s) => s.id === storeId)?.name ?? "Unknown";
 
   return (
     <div className="space-y-6">

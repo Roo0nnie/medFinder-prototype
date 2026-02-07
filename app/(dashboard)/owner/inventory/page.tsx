@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/context/ProductsContext";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -11,10 +11,11 @@ export default function OwnerInventoryPage() {
   const { user } = useAuth();
   const { products } = useProducts();
 
-  const myStores = initialStores.filter((s) => s.ownerId === user?.id);
+  const { stores } = useStores();
+  const myStores = stores.filter((s) => s.ownerId === user?.id);
   const myStoreIds = myStores.map((s) => s.id);
   const myProducts = products.filter((p) => myStoreIds.includes(p.storeId));
-  const getStoreName = (storeId: string) => initialStores.find((s) => s.id === storeId)?.name ?? "Unknown";
+  const getStoreName = (storeId: string) => stores.find((s) => s.id === storeId)?.name ?? "Unknown";
 
   const getStockBadge = (p: { quantity: number; lowStockThreshold: number }) => {
     if (p.quantity === 0) return <Badge variant="outOfStock">Out of stock</Badge>;

@@ -14,6 +14,7 @@ export const initialProducts: Product[] = [
     supplier: "PharmaCorp",
     storeId: "store-1",
     lowStockThreshold: 20,
+    unit: "strip",
   },
   {
     id: "prod-2",
@@ -27,6 +28,7 @@ export const initialProducts: Product[] = [
     supplier: "Unilab",
     storeId: "store-1",
     lowStockThreshold: 15,
+    unit: "capsule",
   },
   {
     id: "prod-3",
@@ -40,7 +42,9 @@ export const initialProducts: Product[] = [
     supplier: "United Lab",
     storeId: "store-1",
     lowStockThreshold: 10,
+    unit: "tablet",
   },
+  // store-2: prod-4, prod-5, prod-12
   {
     id: "prod-4",
     name: "Bandages Assorted",
@@ -50,8 +54,9 @@ export const initialProducts: Product[] = [
     price: 25.0,
     quantity: 30,
     supplier: "MedSupply",
-    storeId: "store-1",
+    storeId: "store-2",
     lowStockThreshold: 10,
+    unit: "box",
   },
   {
     id: "prod-5",
@@ -62,8 +67,9 @@ export const initialProducts: Product[] = [
     price: 150.0,
     quantity: 12,
     supplier: "HealthTech",
-    storeId: "store-1",
+    storeId: "store-2",
     lowStockThreshold: 5,
+    unit: "piece",
   },
   {
     id: "prod-6",
@@ -75,8 +81,9 @@ export const initialProducts: Product[] = [
     price: 450.0,
     quantity: 5,
     supplier: "Sanofi",
-    storeId: "store-1",
+    storeId: "store-3",
     lowStockThreshold: 3,
+    unit: "vial",
   },
   {
     id: "prod-7",
@@ -88,8 +95,9 @@ export const initialProducts: Product[] = [
     price: 3.5,
     quantity: 100,
     supplier: "Unilab",
-    storeId: "store-1",
+    storeId: "store-3",
     lowStockThreshold: 20,
+    unit: "tablet",
   },
   {
     id: "prod-8",
@@ -101,8 +109,9 @@ export const initialProducts: Product[] = [
     price: 18.0,
     quantity: 60,
     supplier: "Unilab",
-    storeId: "store-1",
+    storeId: "store-4",
     lowStockThreshold: 15,
+    unit: "tablet",
   },
   {
     id: "prod-9",
@@ -114,8 +123,9 @@ export const initialProducts: Product[] = [
     price: 4.0,
     quantity: 25,
     supplier: "United Lab",
-    storeId: "store-1",
+    storeId: "store-4",
     lowStockThreshold: 10,
+    unit: "tablet",
   },
   {
     id: "prod-10",
@@ -127,10 +137,10 @@ export const initialProducts: Product[] = [
     price: 2.5,
     quantity: 5,
     supplier: "PharmaCorp",
-    storeId: "store-1",
+    storeId: "store-5",
     lowStockThreshold: 10,
+    unit: "capsule",
   },
-  // Products for store-2
   {
     id: "prod-11",
     name: "Paracetamol 500mg",
@@ -141,9 +151,11 @@ export const initialProducts: Product[] = [
     price: 6.0,
     quantity: 80,
     supplier: "Unilab",
-    storeId: "store-2",
+    storeId: "store-5",
     lowStockThreshold: 20,
+    unit: "strip",
   },
+  // store-2: prod-12
   {
     id: "prod-12",
     name: "Omeprazole 20mg",
@@ -156,7 +168,9 @@ export const initialProducts: Product[] = [
     supplier: "RiteMed",
     storeId: "store-2",
     lowStockThreshold: 10,
+    unit: "tablet",
   },
+  // store-6: prod-13, prod-syrup-1
   {
     id: "prod-13",
     name: "Alcohol 70%",
@@ -166,9 +180,11 @@ export const initialProducts: Product[] = [
     price: 35.0,
     quantity: 20,
     supplier: "MedSupply",
-    storeId: "store-2",
+    storeId: "store-6",
     lowStockThreshold: 5,
+    unit: "bottle",
   },
+  // store-7: prod-14
   {
     id: "prod-14",
     name: "Face Mask Surgical",
@@ -178,9 +194,11 @@ export const initialProducts: Product[] = [
     price: 120.0,
     quantity: 15,
     supplier: "HealthTech",
-    storeId: "store-2",
+    storeId: "store-7",
     lowStockThreshold: 5,
+    unit: "box",
   },
+  // store-8: prod-15
   {
     id: "prod-15",
     name: "Multivitamin",
@@ -190,7 +208,59 @@ export const initialProducts: Product[] = [
     price: 250.0,
     quantity: 10,
     supplier: "Pfizer",
-    storeId: "store-2",
+    storeId: "store-8",
     lowStockThreshold: 5,
+    unit: "bottle",
+  },
+  // Products with variants
+  {
+    id: "prod-syrup-1",
+    name: "Paracetamol Syrup",
+    brand: "Biogesic",
+    category: "Pain Relief",
+    unit: "bottle",
+    description: "Fever and pain reliever for children",
+    price: 45,
+    quantity: 20,
+    supplier: "Unilab",
+    storeId: "store-6",
+    lowStockThreshold: 5,
+    variants: [
+      { id: "v1", label: "30ml", price: 45, quantity: 20, lowStockThreshold: 5 },
+      { id: "v2", label: "15ml", price: 28, quantity: 35, lowStockThreshold: 10 },
+      { id: "v3", label: "5ml", price: 15, quantity: 2, lowStockThreshold: 5 },
+    ],
+  },
+  {
+    id: "prod-syrup-2",
+    name: "Cough Syrup Expectorant",
+    brand: "Solmux",
+    category: "First Aid",
+    unit: "bottle",
+    description: "Relieves cough with phlegm",
+    price: 95,
+    quantity: 12,
+    supplier: "Unilab",
+    storeId: "store-9",
+    lowStockThreshold: 5,
+    variants: [
+      { id: "v1", label: "60ml", price: 95, quantity: 12, lowStockThreshold: 5 },
+      { id: "v2", label: "120ml", price: 165, quantity: 8, lowStockThreshold: 3 },
+    ],
+  },
+  // store-10: prod-16 (Ibuprofen for variety)
+  {
+    id: "prod-16",
+    name: "Ibuprofen 200mg",
+    brand: "Medicol",
+    category: "Pain Relief",
+    dosage: "200mg",
+    description: "Anti-inflammatory pain reliever",
+    price: 8.0,
+    quantity: 15,
+    supplier: "United Lab",
+    storeId: "store-10",
+    lowStockThreshold: 10,
+    unit: "tablet",
   },
 ];

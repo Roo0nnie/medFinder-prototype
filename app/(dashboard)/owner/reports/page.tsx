@@ -3,7 +3,7 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/context/ProductsContext";
 import { initialSales } from "@/lib/data/sales";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 
@@ -11,7 +11,8 @@ export default function OwnerReportsPage() {
   const { user } = useAuth();
   const { products } = useProducts();
 
-  const myStores = initialStores.filter((s) => s.ownerId === user?.id);
+  const { stores } = useStores();
+  const myStores = stores.filter((s) => s.ownerId === user?.id);
   const myStoreIds = myStores.map((s) => s.id);
   const mySales = initialSales.filter((s) => myStoreIds.includes(s.storeId));
   const totalRevenue = mySales.reduce((sum, s) => sum + s.amount, 0);

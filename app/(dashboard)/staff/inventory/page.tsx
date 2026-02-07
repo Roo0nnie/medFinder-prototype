@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/context/ProductsContext";
 import { useToast } from "@/context/ToastContext";
 import { useProductSearch } from "@/hooks/useProductSearch";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/Badge";
@@ -17,17 +17,19 @@ import type { Product } from "@/lib/types";
 export default function StaffInventoryPage() {
   const { user } = useAuth();
   const { products, updateProduct } = useProducts();
+  const { stores } = useStores();
   const { addToast } = useToast();
   const [editProduct, setEditProduct] = useState<Product | null>(null);
 
   const myStoreIds = user?.storeId ? [user.storeId] : [];
   const myProducts = products.filter((p) => myStoreIds.includes(p.storeId));
+  const myStores = stores.filter((s) => myStoreIds.includes(s.id));
   const { products: filteredProducts, query, setSearchQuery } = useProductSearch({
     products: myProducts,
-    stores: initialStores.filter((s) => myStoreIds.includes(s.id)),
+    stores: myStores,
   });
 
-  const getStoreName = (storeId: string) => initialStores.find((s) => s.id === storeId)?.name ?? "Unknown";
+  const getStoreName = (storeId: string) => stores.find((s) => s.id === storeId)?.name ?? "Unknown";
 
   const getStockBadge = (p: { quantity: number; lowStockThreshold: number }) => {
     if (p.quantity === 0) return <Badge variant="outOfStock">Out of stock</Badge>;

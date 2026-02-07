@@ -17,24 +17,38 @@ export function Header({ showProfile = true }: HeaderProps) {
     <header
       className={`flex items-center justify-between h-14 px-4 border-b ${colors.border.default} ${colors.borderDark.default} ${colors.bg.surface} ${colors.bgDark.surface}`}
     >
-      <Link href={user?.role === "customer" ? "/" : `/${user?.role}`} className="flex items-center gap-2">
+      <Link
+        href={!user || user.role === "customer" ? "/" : `/${user.role}`}
+        className="flex items-center gap-2"
+      >
         <span className={`text-lg font-semibold ${colors.text.primary} ${colors.textDark.primary}`}>
           MedFinder
         </span>
       </Link>
 
       <div className="flex items-center gap-4">
-        {showProfile && user && (
+        {showProfile && (
           <>
-            <Link
-              href="/profile"
-              className={`text-sm ${colors.accent.link} ${colors.accent.linkDark}`}
-            >
-              {user.name}
-            </Link>
-            <Button variant="ghost" size="sm" onClick={logout}>
-              Logout
-            </Button>
+            {user ? (
+              <>
+                <Link
+                  href="/profile"
+                  className={`text-sm ${colors.accent.link} ${colors.accent.linkDark}`}
+                >
+                  {user.name}
+                </Link>
+                <Button variant="ghost" size="sm" onClick={logout}>
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className={`text-sm ${colors.accent.link} ${colors.accent.linkDark}`}
+              >
+                Login
+              </Link>
+            )}
           </>
         )}
       </div>

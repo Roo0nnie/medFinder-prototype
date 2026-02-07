@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/Button";
 
 const CATEGORIES = ["Pain Relief", "Antibiotics", "First Aid", "Medical Devices", "Diabetes", "Vitamins", "Antihistamine", "Digestive", "Protective Equipment"];
 
+const UNITS = ["piece", "box", "bottle", "pack", "tube", "strip", "sachet", "vial", "capsule", "tablet"];
+
 interface ProductFormModalProps {
   open: boolean;
   mode: "create" | "edit";
@@ -35,6 +37,7 @@ export function ProductFormModal({
   const [supplier, setSupplier] = useState("");
   const [storeId, setStoreId] = useState("");
   const [lowStockThreshold, setLowStockThreshold] = useState("");
+  const [unit, setUnit] = useState("piece");
 
   useEffect(() => {
     if (product) {
@@ -48,6 +51,7 @@ export function ProductFormModal({
       setSupplier(product.supplier);
       setStoreId(product.storeId);
       setLowStockThreshold(String(product.lowStockThreshold));
+      setUnit(product.unit ?? "piece");
     } else {
       setName("");
       setBrand("");
@@ -59,6 +63,7 @@ export function ProductFormModal({
       setSupplier("");
       setStoreId(stores[0]?.id ?? "");
       setLowStockThreshold("10");
+      setUnit("piece");
     }
   }, [product, stores, open]);
 
@@ -81,6 +86,7 @@ export function ProductFormModal({
       supplier: supplier.trim(),
       storeId,
       lowStockThreshold: thresholdNum,
+      unit: unit || "piece",
     });
   };
 
@@ -110,6 +116,18 @@ export function ProductFormModal({
           <Input label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
           <Input label="Price" type="number" step="0.01" min="0" value={price} onChange={(e) => setPrice(e.target.value)} required />
           <Input label="Quantity" type="number" min="0" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Unit</label>
+            <select
+              value={unit}
+              onChange={(e) => setUnit(e.target.value)}
+              className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200"
+            >
+              {UNITS.map((u) => (
+                <option key={u} value={u}>{u}</option>
+              ))}
+            </select>
+          </div>
           <Input label="Supplier" value={supplier} onChange={(e) => setSupplier(e.target.value)} required />
           <div>
             <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Store</label>

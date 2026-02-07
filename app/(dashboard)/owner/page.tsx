@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/context/UsersContext";
 import { useProducts } from "@/context/ProductsContext";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { Button } from "@/components/ui/Button";
 
@@ -13,7 +13,8 @@ export default function OwnerDashboardPage() {
   const { users } = useUsers();
   const { products } = useProducts();
 
-  const myStores = initialStores.filter((s) => s.ownerId === user?.id);
+  const { stores } = useStores();
+  const myStores = stores.filter((s) => s.ownerId === user?.id);
   const myStoreIds = myStores.map((s) => s.id);
   const myProducts = products.filter((p) => myStoreIds.includes(p.storeId));
   const staffCount = users.filter((u) => u.ownerId === user?.id).length;

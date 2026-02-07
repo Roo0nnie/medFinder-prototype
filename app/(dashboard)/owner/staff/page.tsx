@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useUsers } from "@/context/UsersContext";
 import { useToast } from "@/context/ToastContext";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/Table";
 import { Button } from "@/components/ui/Button";
@@ -20,9 +20,10 @@ export default function OwnerStaffPage() {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<User | null>(null);
 
-  const myStores = initialStores.filter((s) => s.ownerId === user?.id);
+  const { stores } = useStores();
+  const myStores = stores.filter((s) => s.ownerId === user?.id);
   const staff = users.filter((u) => u.ownerId === user?.id && u.role === "staff");
-  const getStoreName = (storeId: string) => initialStores.find((s) => s.id === storeId)?.name ?? "Unknown";
+  const getStoreName = (storeId: string) => stores.find((s) => s.id === storeId)?.name ?? "Unknown";
 
   const handleSave = (data: { name: string; email: string; password?: string; storeId?: string }) => {
     if (editingUser) {

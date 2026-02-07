@@ -6,7 +6,7 @@ let searchIndex: MiniSearch<Product> | null = null;
 function buildIndex(products: Product[]): MiniSearch<Product> {
   const index = new MiniSearch<Product>({
     fields: ["name", "brand", "category", "description", "dosage"],
-    storeFields: ["id", "name", "brand", "category", "dosage", "description", "price", "quantity", "supplier", "storeId", "lowStockThreshold"],
+    storeFields: ["id", "name", "brand", "category", "dosage", "description", "price", "quantity", "supplier", "storeId", "lowStockThreshold", "unit"],
     searchOptions: {
       boost: { name: 2, brand: 1.5, category: 1 },
       fuzzy: 0.2,

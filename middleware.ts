@@ -2,6 +2,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const PUBLIC_PATHS = ["/login", "/register"];
+
+function isGuestPath(pathname: string): boolean {
+  return (
+    pathname === "/" ||
+    pathname.startsWith("/pharmacies") ||
+    pathname.startsWith("/contact")
+  );
+}
+
 const ROLE_ROUTES: Record<string, string[]> = {
   admin: ["/admin"],
   owner: ["/owner", "/profile"],
@@ -30,6 +39,13 @@ export function middleware(request: NextRequest) {
     if (user?.role) {
       const home = user.role === "customer" ? "/" : "/" + user.role;
       return NextResponse.redirect(new URL(home, request.url));
+    }
+    return NextResponse.next();
+  }
+
+  if (isGuestPath(pathname)) {
+    if (user?.role && user.role !== "customer") {
+      return NextResponse.redirect(new URL(`/${user.role}`, request.url));
     }
     return NextResponse.next();
   }

@@ -2,20 +2,18 @@
 
 import React, { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
 import { useProducts } from "@/context/ProductsContext";
+import { useStores } from "@/context/StoresContext";
 import { useSearchHistory } from "@/context/SearchHistoryContext";
 import { useProductSearch } from "@/hooks/useProductSearch";
-import { initialStores } from "@/lib/data/stores";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductSearch } from "@/components/products/ProductSearch";
 import { SortControls } from "@/components/products/SortControls";
 import { Button } from "@/components/ui/Button";
 
 function CustomerHomeContent() {
-  const { user } = useAuth();
   const { products } = useProducts();
+  const { stores } = useStores();
   const { addHistory } = useSearchHistory();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") ?? "";
@@ -29,9 +27,8 @@ function CustomerHomeContent() {
     setProductFilters,
     categories,
     cities,
-    stores,
     storeById,
-  } = useProductSearch({ products, stores: initialStores });
+  } = useProductSearch({ products, stores });
 
   useEffect(() => {
     if (initialQuery) setSearchQuery(initialQuery);
@@ -50,8 +47,14 @@ function CustomerHomeContent() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      <h1 className="text-2xl font-semibold text-zinc-700 dark:text-zinc-100">Product Finder</h1>
-      <p className="text-zinc-600 dark:text-zinc-400">Search for medicines and medical supplies</p>
+      <section className="space-y-2">
+        <h1 className="text-3xl font-bold text-zinc-800 dark:text-zinc-100 tracking-tight">
+          Find Medicines & Medical Supplies
+        </h1>
+        <p className="text-zinc-600 dark:text-zinc-400 text-lg">
+          Search by name, brand, or category. View availability and locate nearby pharmacies.
+        </p>
+      </section>
 
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <ProductSearch value={query} onChange={setSearchQuery} />
@@ -102,8 +105,23 @@ function CustomerHomeContent() {
       </p>
 
       {filteredProducts.length === 0 ? (
-        <div className="text-center py-12 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
-          <p className="text-zinc-600 dark:text-zinc-400">No products found. Try adjusting your search or filters.</p>
+        <div className="text-center py-16 px-6 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+          <div className="mx-auto w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center mb-4">
+            <svg
+              className="w-6 h-6 text-zinc-400 dark:text-zinc-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <p className="text-zinc-700 dark:text-zinc-300 font-medium mb-1">No products found</p>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-4">Try adjusting your search or filters to see more results.</p>
+          <Button variant="ghost" size="sm" onClick={() => setSearchQuery("")}>
+            Clear search
+          </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -117,15 +135,6 @@ function CustomerHomeContent() {
           ))}
         </div>
       )}
-
-      <div className="flex gap-4 pt-4">
-        <Link href="/pharmacies">
-          <Button variant="secondary">View Pharmacies</Button>
-        </Link>
-        <Link href="/contact">
-          <Button variant="ghost">Contact & Feedback</Button>
-        </Link>
-      </div>
     </div>
   );
 }

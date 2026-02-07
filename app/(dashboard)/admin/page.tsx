@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useUsers } from "@/context/UsersContext";
 import { useProducts } from "@/context/ProductsContext";
-import { initialStores } from "@/lib/data/stores";
+import { useStores } from "@/context/StoresContext";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { Button } from "@/components/ui/Button";
 
@@ -12,7 +12,8 @@ export default function AdminDashboardPage() {
   const { users } = useUsers();
   const { products } = useProducts();
   const ownerCount = users.filter((u) => u.role === "owner").length;
-  const storeCount = initialStores.length;
+  const { stores } = useStores();
+  const storeCount = stores.length;
 
   return (
     <div className="space-y-6">

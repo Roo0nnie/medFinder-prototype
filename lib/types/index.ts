@@ -19,6 +19,14 @@ export interface Store {
   ownerId: string;
 }
 
+export interface ProductVariant {
+  id: string;
+  label: string;
+  price: number;
+  quantity: number;
+  lowStockThreshold: number;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -31,6 +39,8 @@ export interface Product {
   supplier: string;
   storeId: string;
   lowStockThreshold: number;
+  unit?: string;
+  variants?: ProductVariant[];
 }
 
 export interface Sale {
