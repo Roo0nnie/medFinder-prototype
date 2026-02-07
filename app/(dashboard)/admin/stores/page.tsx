@@ -71,7 +71,7 @@ export default function AdminStoresPage() {
               <TableHead>City/Municipality</TableHead>
               <TableHead>Owner</TableHead>
               <TableHead>Products</TableHead>
-              <TableHead></TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
